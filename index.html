@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thai Lorem Ipsum</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-sm rounded-lg p-6 sm:p-8">
+            <h1 class="text-xl sm:text-2xl font-light text-center mb-6 text-gray-700">Thai Lorem Ipsum Generator</h1>
+            
+            <div class="space-y-4 mb-6">
+                <input 
+                    type="number" 
+                    id="paragraphCount" 
+                    min="1" 
+                    value="3" 
+                    placeholder="Number of Paragraphs"
+                    class="w-full p-2 text-sm sm:text-base border-b border-gray-300 focus:outline-none focus:border-gray-500"
+                >
+                <input 
+                    type="number" 
+                    id="wordCount" 
+                    min="10" 
+                    max="200" 
+                    value="50" 
+                    placeholder="Words per Paragraph"
+                    class="w-full p-2 text-sm sm:text-base border-b border-gray-300 focus:outline-none focus:border-gray-500"
+                >
+            </div>
+            
+            <div class="flex space-x-4 mb-6">
+                <button 
+                    onclick="generateLoremIpsum()" 
+                    class="flex-1 py-2 text-sm sm:text-base text-gray-700 border border-gray-300 hover:bg-gray-100 transition"
+                >
+                    Generate
+                </button>
+                <button 
+                    onclick="copyToClipboard()" 
+                    class="flex-1 py-2 text-sm sm:text-base text-gray-700 border border-gray-300 hover:bg-gray-100 transition"
+                >
+                    Copy
+                </button>
+            </div>
+            
+            <div 
+                id="loremOutput" 
+                class="bg-gray-50 p-4 min-h-[200px] max-h-[500px] overflow-y-auto border border-gray-200 text-sm sm:text-base"
+            ></div>
+        </div>
+    </div>
+
+    <script>
+        const thaiWords = [
+            'สวัสดี', 'ประเทศไทย', 'กรุงเทพ', 'อาหาร', 'น้ำ', 'ดี', 'มาก', 
+            'เธอ', 'เขา', 'เรา', 'ที่', 'และ', 'หรือ', 'จาก', 'ใน', 
+            'กิน', 'นอน', 'เดิน', 'วิ่ง', 'หยุด', 'เริ่ม', 'สิ้นสุด', 
+            'คิด', 'รู้', 'เห็น', 'ฟัง', 'พูด', 'เขียน', 'อ่าน', 
+            'ความรัก', 'ความสุข', 'ความเศร้า', 'ความหวัง', 'ความฝัน', 
+            'ความคิด', 'ความรู้สึก', 'ความเชื่อ', 'ความเข้าใจ', 
+            'ดวงอาทิตย์', 'ดวงจันทร์', 'ดาว', 'ฟ้า', 'แผ่นดิน', 'น้ำทะเล', 
+            'ต้นไม้', 'ดอกไม้', 'ใบไม้', 'ภูเขา', 'แม่น้ำ', 'ทะเล', 
+            'รถ', 'เรือ', 'เครื่องบิน', 'จักรยาน', 'มอเตอร์ไซค์', 
+            'รถไฟ', 'รถเมล์', 'เรือใบ', 'เฮลิคอปเตอร์', 
+            'สวย', 'หล่อ', 'ใหญ่', 'เล็ก', 'สูง', 'เตี้ย', 'ยาว', 'สั้น', 
+            'สดใส', 'มืด', 'สว่าง', 'อบอุ่น', 'เย็น', 'ร้อน', 
+            'ครู', 'หมอ', 'วิศวกร', 'นักธุรกิจ', 'นักเรียน', 'นักศึกษา', 
+            'ครอบครัว', 'เพื่อน', 'คู่รัก', 'พี่', 'น้อง', 
+            'ชีวิต', 'ความตาย', 'เวลา', 'ความจริง', 'ความฝัน', 
+            'ปรัชญา', 'วิทยาศาสตร์', 'ศิลปะ', 'วัฒนธรรม', 
+            'เมฆ', 'ลม', 'ฝน', 'แดด', 'คืน', 'กลางวัน', 
+            'ขอบคุณ', 'ไม่เป็นไร', 'เชิญ', 'ยินดี', 'ต้อนรับ'
+        ];
+
+        function generateLoremIpsum() {
+            const paragraphCount = document.getElementById('paragraphCount').value;
+            const wordCount = document.getElementById('wordCount').value;
+            const outputDiv = document.getElementById('loremOutput');
+            outputDiv.innerHTML = '';
+
+            for (let i = 0; i < paragraphCount; i++) {
+                let paragraph = [];
+
+                while (paragraph.length < wordCount) {
+                    const randomWord = thaiWords[Math.floor(Math.random() * thaiWords.length)];
+                    paragraph.push(randomWord);
+                }
+
+                const paragraphText = paragraph.join('');
+                const paragraphEl = document.createElement('p');
+                paragraphEl.textContent = paragraphText;
+                paragraphEl.className = 'mb-4 text-gray-800 break-words';
+                outputDiv.appendChild(paragraphEl);
+            }
+        }
+
+        function copyToClipboard() {
+            const outputDiv = document.getElementById('loremOutput');
+            const text = outputDiv.innerText;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Thai Lorem Ipsum copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy text.');
+            });
+        }
+
+        // Generate initial lorem on page load
+        generateLoremIpsum();
+    </script>
+</body>
+</html>
